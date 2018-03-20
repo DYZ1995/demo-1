@@ -6,13 +6,36 @@ import App from './App'
 import VRouter from 'vue-router'
 import VResource from 'vue-resource'
 
+
+import MenuPage from './components/menu'
+import DataChart from './components/dataChart'
+
+
 Vue.use(VRouter),
 Vue.use(VResource)
 
 
 
+let router=new VRouter({
+	mode:'history',
+	routes:[
+		{
+			path:'/',
+			component:MenuPage
+		},
+		{
+			path:'/dataChart',
+			component:DataChart
+		}
+
+	]
+})
+
+
+
 new Vue({
   el: '#app',
+  router,
   components: { App },
   template: '<App/>'
 })

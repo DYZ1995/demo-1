@@ -6,10 +6,10 @@
       </div>
       <div class="loginRight">
         <div class="inputDiv">
-          <input v-model="username" type="text" placeholder="请输入用户名" @focus="delErrText">
-          <input v-model="password" type="password" placeholder="请输入密码" @focus="delErrText">
+          <input v-model="userName" type="text" placeholder="请输入用户名" @focus="delErrText">
+          <input v-model="passWord" type="password" placeholder="请输入密码" @focus="delErrText">
           <button @click="logIn">登录</button>
-          <span v-show="spanShow">{{spanShowContent}}</span>
+          <span v-if="spanShow">{{spanShowContent}}</span>
         </div>
       </div>
     </div>
@@ -18,43 +18,37 @@
 
 <script>
 export default {
+  props:{
+    spanShowContent:{
+      type:String,
+      default:""
+    },
+    spanShow:{
+      type:Boolean,
+      default:false
+    }
+  },
   data(){
     return{
-      isLogin:false,
-      spanShow:false,
-      spanShowContent:"",
-      username:"",
-      password:""
+      userName:"",
+      passWord:""
 
+    }
+  },
+  watch:{
+    userName:function(val){
+      this.$emit('use-n',this.userName)
+    },
+    passWord:function(val){
+      this.$emit('pass-w',this.passWord)
     }
   },
   methods:{
     logIn(){
-      if(this.username==""||this.password==""){
-        this.spanShowContent="用户名或密码不能为空！";
-        this.spanShow=true;
-      }else{
-        var password=this.password;
-        var username=this.username;    
-        this.$http({
-          method:'POST',
-          url:'https://www.easy-mock.com/mock/5a0d41c885e6ba3feeeb1617/example/login?password='+password+'&username='+username
-        }).then(function(res) {
-          if(res.body.data.status.loginCode==-1){
-            this.spanShowContent="用户名或密码错误！";
-            this.spanShow=true;
-          }else{
-            this.$router.push('/index')
-          }
-        },function(err){
-          alert(2)
-          console.log(err)
-        })
-      }
+      this.$emit('login-button');
     },
     delErrText(){
-        this.spanShow=false
-        this.spanShowContent=""
+      this.$emit('del-err')
     }
   }
 }
@@ -65,7 +59,6 @@ export default {
     width: 100%;
     height: 100%;
     position:relative;
-    background: #ECEFEF;
   }
   .loginDiv{
     width: 100%;
