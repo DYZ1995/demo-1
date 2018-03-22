@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="login" v-if="!isLogin">
-     <login-page :span-show="spanShow"   :span-show-content="spanShowContent" @use-n="userName" @pass-w="passWord" @login-button="logIn" 
+     <login-page :span-show="spanShow"   :span-show-content="spanShowContent" @user-n="userName" @pass-w="passWord" @login-button="logIn" 
      @del-err="delErrText"></login-page>
     </div>
     <div class="index" v-if="isLogin">
@@ -42,7 +42,7 @@ export default {
       this.password=data
     },
     logIn(){
-     
+
       if(this.username==""||this.password==""){
         this.spanShowContent="用户名或密码不能为空！";
         this.spanShow=true;
@@ -53,6 +53,7 @@ export default {
           method:'POST',
           url:'https://www.easy-mock.com/mock/5a0d41c885e6ba3feeeb1617/example/login?password='+password+'&username='+username
         }).then(function(res) {
+           console.log(res)
           if(res.body.data.status.loginCode==-1){
             this.spanShowContent="用户名或密码错误！";
             this.spanShow=true;
@@ -74,7 +75,6 @@ export default {
     },
     exitBtn(){
         this.exitDialog=true
-      //this.$router.push('/')
     },
     exitSystem(){
       this.exitDialog=false;

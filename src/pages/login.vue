@@ -6,8 +6,8 @@
       </div>
       <div class="loginRight">
         <div class="inputDiv">
-          <input v-model="userName" type="text" placeholder="请输入用户名" @focus="delErrText">
-          <input v-model="passWord" type="password" placeholder="请输入密码" @focus="delErrText">
+          <input v-model="username" type="text" placeholder="请输入用户名" @focus="delErrText">
+          <input v-model="password" type="password" placeholder="请输入密码" @focus="delErrText">
           <button @click="logIn">登录</button>
           <span v-if="spanShow">{{spanShowContent}}</span>
         </div>
@@ -19,6 +19,7 @@
 <script>
 export default {
   props:{
+   
     spanShowContent:{
       type:String,
       default:""
@@ -30,26 +31,27 @@ export default {
   },
   data(){
     return{
-      userName:"",
-      passWord:""
+      username:"",
+      password:""
 
     }
   },
   watch:{
-    userName:function(val){
-      this.$emit('use-n',this.userName)
+    username(){
+      this.$emit('user-n',this.username)
     },
-    passWord:function(val){
-      this.$emit('pass-w',this.passWord)
+    password(){
+      this.$emit('pass-w',this.password)
     }
   },
   methods:{
     logIn(){
       this.$emit('login-button');
+
     },
     delErrText(){
       this.$emit('del-err')
-    }
+    },
   }
 }
 </script>
@@ -59,6 +61,7 @@ export default {
     width: 100%;
     height: 100%;
     position:relative;
+    background: #ECEFEF;
   }
   .loginDiv{
     width: 100%;
@@ -89,7 +92,7 @@ export default {
   .inputDiv{
     margin-left: 80px;
   }
-  .inputDiv>input,button,span{
+  .inputDiv>input,.inputDiv>button,.inputDiv>span{
     display: block;
   }
   .inputDiv>input,button{
